@@ -17,7 +17,7 @@ module DelayedJobReact
           render json: { jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) } }
         }
         format.html{}
-      end      
+      end
     end
 
     def statuses
@@ -33,13 +33,13 @@ module DelayedJobReact
 
     def destroy
       job = Delayed::Job.find_by(id: params[:id])
-      job&.destroy
+      job.destroy if job
       render json: {}
     end
 
     def retry
       job = Delayed::Job.find_by(id: params[:id])
-      job&.update(run_at: Time.now)
+      job.update(run_at: Time.now) if job
       render json: { job: DelayedJobReact::JobSerializer.new(job) }
     end
   end
