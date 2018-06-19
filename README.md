@@ -1,5 +1,5 @@
 # DelayedJobReact
-Simple React Component built on React on Rails to view and manage Delayed Jobs running with 'delayed_job_active_record'
+Simple React Component built on [React Rails](https://github.com/reactjs/react-rails) to view and manage Delayed Jobs running with [delayed_job_active_record](https://github.com/collectiveidea/delayed_job_active_record)
 
 ## Usage
 
