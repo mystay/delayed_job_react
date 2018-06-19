@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delayed job react</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag    "delayed_job_react/application", media: "all" %>
+  <%= stylesheet_link_tag  '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' %>
+  <%= stylesheet_link_tag '//use.fontawesome.com/releases/v5.0.12/css/all.css' %>
+
+</head>
+<body>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+
+  <%= javascript_include_tag "delayed_job_react/react_loader" %>
+  <%= javascript_include_tag "delayed_job_react/application" %>
+</body>
+</html>
