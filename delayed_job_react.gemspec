@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.1.0"
-  s.add_dependency 'react-rails'
-  s.add_dependency 'haml'
-  s.add_dependency 'jquery-rails'
-  s.add_dependency 'delayed_job'
-  s.add_dependency 'delayed_job_active_record'
-  s.add_dependency 'active_model_serializers'
+  s.add_dependency 'react-rails', '~> 2.4.4'
+  s.add_dependency 'haml', '~> 5.0.4'
+  s.add_dependency 'jquery-rails', '~> 4.3.3'
+  s.add_dependency 'delayed_job', '~> 4.1.5'
+  s.add_dependency 'delayed_job_active_record', '~> 4.1.3'
+  s.add_dependency 'active_model_serializers', '~> 0.10.7'
 end

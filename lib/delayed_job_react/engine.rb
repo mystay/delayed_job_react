@@ -6,12 +6,5 @@ module DelayedJobReact
       app.config.assets.precompile += %w( delayed_job_react/react_loader.js )
     end
 
-
-    config.generators do |g|
-      g.test_framework :rspec, fixture: false
-      g.assets false
-      g.helper false
-    end
-
   end
 end

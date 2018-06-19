@@ -13,22 +13,17 @@ gem 'delayed_job_react', github: 'mystay/delayed_job_react'
 
 And then mount the engine to your `config/routes.rb`:
 ```bash
-  mount DelayedJobReact::Engine, at: "/delayed_job"
-```
-
-Or install it yourself as:
-```bash
-$ gem install delayed_job_react
+mount DelayedJobReact::Engine, at: "/delayed_job"
 ```
 
 You can then view your running jobs at
 ```
-  http://example.com/delayed_job
+http://example.com/delayed_job
 ```
 
 To install the component in your own view, render the component:
 ```
-  <%= react_component 'DelayedJobReactViewer' %>
+<%= react_component 'DelayedJobReactViewer' %>
 ```
 
 ## License
