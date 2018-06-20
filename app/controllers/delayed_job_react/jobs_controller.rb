@@ -14,7 +14,13 @@ module DelayedJobReact
           end
           @jobs = @jobs.where(queue: params[:queue]) if params[:queue].present?
           @jobs = @jobs.page(params[:page])
-          render json: { jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) } }
+          render json: {
+            counts: {
+              failed: @jobs.where.not(failed_at: nil).count,
+              total: @jobs.count
+            },
+            jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) }
+          }
         }
         format.html{}
       end
