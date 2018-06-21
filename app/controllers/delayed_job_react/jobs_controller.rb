@@ -16,7 +16,7 @@ module DelayedJobReact
           @jobs = @jobs.page(params[:page])
           render json: {
             counts: {
-              failed: @jobs.where.not(failed_at: nil).count,
+              failed: @jobs.where('attempts > 2').count,
               total: @jobs.count
             },
             jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) }
