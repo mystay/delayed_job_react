@@ -10,13 +10,24 @@ module DelayedJobReact
           if params[:status].to_s.casecmp('pending').zero?
             @jobs = @jobs.where(attempts: 0)
           elsif params[:status].to_s.casecmp('failed').zero?
-            @jobs = @jobs.where.not(last_error: nil)
+            if defined?(Moped)
+              @jobs = @jobs.where(:last_error.ne => nil)
+            elsif defined?(ActiveRecord)
+              @jobs.where.not(last_error: nil)
+            end
           end
           @jobs = @jobs.where(queue: params[:queue]) if params[:queue].present?
-          @jobs = @jobs.page(params[:page])
+          @jobs = @jobs.page(params[:page]) if defined?(ActiveRecord)
+          if defined?(Moped)
+            failed_count = @jobs.where(:attempts.gt => 2).count
+          elsif defined?(ActiveRecord)
+            failed_count = @jobs.where('attempts > 2').count
+          else
+            failed_count = 0
+          end
           render json: {
             counts: {
-              failed: @jobs.where('attempts > 2').count,
+              failed: failed_count,
               total: @jobs.count
             },
             jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) }
