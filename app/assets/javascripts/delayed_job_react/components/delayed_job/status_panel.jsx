@@ -39,7 +39,7 @@ class DelayedJobReactStatusPanel extends React.Component{
           <div className="pull-right">
             {this.state.totalCount}
           </div>
-          <a href="#" onClick={() => {this.props.setStatus(this.props.status)}}>
+          <a href="#" onClick={(e) => {e.preventDefault(); this.props.setStatus(this.props.status)}}>
             {this.props.status}
           </a>
         </h3>
