@@ -6,6 +6,10 @@ module DelayedJobReact
                :handler_object_id, :handler_method, :handler_job,
                :handler_job_arguments, :status, :handler_active_record_attributes, :handler_controller_parameters
 
+    def id
+      object.id.to_s
+    end
+
     def run_at
       timestamp_for(object.run_at)
     end
