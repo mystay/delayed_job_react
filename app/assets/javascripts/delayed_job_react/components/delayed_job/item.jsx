@@ -267,7 +267,7 @@ class DelayedJobReactItem extends React.Component{
   runningIcon(){
     if (this.state.job.locked_at){
       return(
-        <i className="fa fa-sync fa-spin text-success" style={{marginRight: 10}} />
+        <i className="fa fa-sync fa-refresh fa-spin text-success" style={{marginRight: 10}} />
       );
     }
   }
