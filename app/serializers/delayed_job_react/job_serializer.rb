@@ -80,7 +80,7 @@ module DelayedJobReact
     private
 
     def timestamp_for(timevalue)
-      timevalue.present? && timevalue.strftime('%b %d, %Y %H:%M%P')
+      timevalue.present? && timevalue.in_time_zone.strftime('%b %d, %Y %H:%M%P')
     end
   end
 

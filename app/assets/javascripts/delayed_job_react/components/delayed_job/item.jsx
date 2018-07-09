@@ -25,6 +25,7 @@ class DelayedJobReactItem extends React.Component{
     this.retryJob = this.retryJob.bind(this);
     this.failedAt = this.failedAt.bind(this);
     this.errorMessage = this.errorMessage.bind(this);
+    this.runningIcon = this.runningIcon.bind(this);
   }
   componentDidMount(){
     this.setState({job: this.props.job})
@@ -43,6 +44,7 @@ class DelayedJobReactItem extends React.Component{
             </button>
           </div>
           <p>
+            {this.runningIcon()}
             <span className="label label-default" style={{marginRight: 5}}>
               Created: {this.state.job.created_at}
             </span>
@@ -258,6 +260,14 @@ class DelayedJobReactItem extends React.Component{
           {this.toggleButton('Error')}
           {errorMessage}
         </React.Fragment>
+      );
+    }
+  }
+
+  runningIcon(){
+    if (this.state.job.locked_at){
+      return(
+        <i className="fa fa-sync fa-spin text-success" style={{marginRight: 10}} />
       );
     }
   }
