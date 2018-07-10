@@ -40,7 +40,7 @@ class DelayedJobReactCounter extends React.Component{
     if (this.state.failed>0){
       iconClass += ' fa-exclamation-triangle text-warning';
     }else{
-      iconClass += ' fa-sync';
+      iconClass += ' fa-sync fa-refresh';
       if (total>0){
         iconClass += ' fa-spin';
       }

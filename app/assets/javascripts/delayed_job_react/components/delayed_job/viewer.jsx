@@ -52,7 +52,7 @@ class DelayedJobReactViewer extends React.Component{
                     onClick={() => {
                       this.setState({polling: !this.state.polling});this.init();
                     }} >
-                    <i className={`fa fa-sync${this.state.polling ? ' fa-spin' : ''}`} /> Auto-refresh
+                    <i className={`fa fa-sync fa-refresh${this.state.polling ? ' fa-spin' : ''}`} /> Auto-refresh
                   </button>
                 </div>
               </div>

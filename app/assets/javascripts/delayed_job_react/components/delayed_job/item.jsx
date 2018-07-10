@@ -37,7 +37,7 @@ class DelayedJobReactItem extends React.Component{
           <div className="pull-right">
             <button className="btn btn-default btn-xs" onClick={this.retryJob}
               style={{marginRight: 10}}>
-              <i className={`fa fa-sync ${this.state.retrying ? 'fa-spin' : ''}`} /> Retry
+              <i className={`fa fa-sync fa-refresh ${this.state.retrying ? 'fa-spin' : ''}`} /> Retry
             </button>
             <button className="btn btn-default btn-xs" onClick={this.deleteJob}>
               <i className="fa fa-trash" /> Delete
