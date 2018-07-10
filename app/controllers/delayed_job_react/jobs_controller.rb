@@ -56,7 +56,7 @@ module DelayedJobReact
 
     def retry
       job = Delayed::Job.find_by(id: params[:id])
-      job.update(run_at: Time.now, failed_at: nil) if job
+      job.update(run_at: Time.now, failed_at: nil, last_error: nil) if job
       render json: { job: DelayedJobReact::JobSerializer.new(job) }
     end
   end
