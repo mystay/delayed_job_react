@@ -27,10 +27,10 @@ module DelayedJobReact
     end
 
     def status
-      if object.attempts.zero?
-        'pending'
-      elsif object.last_error.present?
+      if object.last_error.present?
         'failed'
+      else
+        'pending'
       end
     end
 
