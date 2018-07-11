@@ -4,7 +4,8 @@ class DelayedJobReactList extends React.Component{
     this.state = {
       loading: null,
       jobs: [],
-      previousProps: null
+      previousProps: null,
+      polling: false
     }
     this.init = this.init.bind(this);
     this.jobList = this.jobList.bind(this);
@@ -13,12 +14,13 @@ class DelayedJobReactList extends React.Component{
 
   componentDidUpdate(){
     if (this.props.status && this.state.previousProps != JSON.stringify(this.props)){
+      this.setState({polling: this.props.polling});
       this.init();
     }
   }
 
   init(){
-    if (!this.state.loading){
+    if (!this.state.loading && this.props.status){
       this.setState({loading: true, previousProps: JSON.stringify(this.props)});
       let _this=this;
       let url = `/delayed_job/jobs?status=${this.props.status}`;
@@ -30,6 +32,9 @@ class DelayedJobReactList extends React.Component{
         url: url,
         success: function(data){
           _this.setState({jobs: data.jobs, loading: false});
+          if (_this.state.polling){
+            setTimeout(() => {_this.init()}, 15000);
+          }
         }
       });
     }

@@ -10,7 +10,8 @@ class DelayedJobReactItem extends React.Component{
       displayAttributes: false,
       displayArguments: false,
       displayParameters: false,
-      job: null
+      job: null,
+      previousProps: null
     }
     this.handlerObject = this.handlerObject.bind(this);
     this.handlerObjectID = this.handlerObjectID.bind(this);
@@ -28,7 +29,12 @@ class DelayedJobReactItem extends React.Component{
     this.runningIcon = this.runningIcon.bind(this);
   }
   componentDidMount(){
-    this.setState({job: this.props.job})
+    this.setState({job: this.props.job});
+  }
+  componentDidUpdate(){
+    if (this.state.previousProps != JSON.stringify(this.props)){
+      this.setState({job: this.props.job, previousProps: JSON.stringify(this.props)});
+    }
   }
   render(){
     if (this.state.job){

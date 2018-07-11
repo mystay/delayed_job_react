@@ -28,6 +28,9 @@ class DelayedJobReactViewer extends React.Component{
         url: '/delayed_job/jobs/statuses',
         success: function(data){
           _this.setState({statuses: data, loading: false});
+          if (JSON.stringify(data)=='{}'){
+            _this.setStatus('', '');
+          }
           if (_this.state.polling){
             setTimeout(() => {_this.init()}, 15000);
           }
@@ -59,7 +62,9 @@ class DelayedJobReactViewer extends React.Component{
             </div>
           </div>
           <div className="col-sm-9">
-            <DelayedJobReactList status={this.state.status}
+            <DelayedJobReactList
+              status={this.state.status}
+              polling={this.state.polling}
               queue={this.state.queue}
               updateStatusPanel={this.updateStatusPanel}
               />
