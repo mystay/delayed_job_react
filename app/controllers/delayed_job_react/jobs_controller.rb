@@ -17,11 +17,11 @@ module DelayedJobReact
             end
           end
           @jobs = @jobs.where(queue: params[:queue]) if params[:queue].present?
-          @jobs = @jobs.page(params[:page]) if defined?(ActiveRecord)
           if defined?(Moped)
             failed_count = @jobs.where(:attempts.gt => 2).count
           elsif defined?(ActiveRecord)
             failed_count = @jobs.where('attempts > 2').count
+            @jobs = @jobs.page(params[:page])
           else
             failed_count = 0
           end
