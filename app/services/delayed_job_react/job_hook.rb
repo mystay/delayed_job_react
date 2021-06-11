@@ -3,7 +3,7 @@
 module DelayedJobReact
   class JobHook < Delayed::Plugin
     callbacks do |lifecycle|
-      if defined?(ActionCable)
+      if defined?(ActionCable) && defined?(ApplicationCable::Channel)
         lifecycle.after(:enqueue) do |_job|
           ActionCable.server.broadcast 'delayed_job_react_jobs_channel',
                                        total: Delayed::Job.count,
