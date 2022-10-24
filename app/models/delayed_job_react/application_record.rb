@@ -4,4 +4,9 @@ if defined?(ActiveRecord)
       self.abstract_class = true
     end
   end
+else
+  module DelayedJobReact
+    class ApplicationRecord
+    end
+  end
 end
