@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DelayedJobReact::Engine.routes.draw do
   root to: 'jobs#index'
   resources :jobs do
