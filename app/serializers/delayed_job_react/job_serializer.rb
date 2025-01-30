@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module DelayedJobReact
   class JobSerializer < ActiveModel::Serializer
     attributes :id, :queue, :priority, :attempts, :handler, :last_error,
@@ -39,36 +40,38 @@ module DelayedJobReact
     end
 
     def handler_object
-      results = object.handler.scan(%r{object:\s!ruby\/object:(\w*)\n})[0]
-      results.first if results && results.any?
+      results = object.handler.scan(%r{object:\s!ruby/object:(\w*)\n})[0]
+      results.first if results&.any?
     end
 
     def handler_object_id
-      results = object.handler.scan(/name:\sid\n\s*value_before_type_cast\:\s?(\w*)/)[0]
-      results.first if results && results.any?
+      results = object.handler.scan(/name:\sid\n\s*value_before_type_cast:\s?(\w*)/)[0]
+      results.first if results&.any?
     end
 
     def handler_method
-      results = object.handler.scan(/method_name:\s\:([\w\!]*)/)[0]
-      results.first if results && results.any?
+      results = object.handler.scan(/method_name:\s:([\w!]*)/)[0]
+      results.first if results&.any?
     end
 
     def handler_job
-      results = object.handler.scan(/job_data\:\n\s*job_class\:\s([\w\:]*)/)[0]
-      results.first if results && results.any?
+      results = object.handler.scan(/job_data:\n\s*job_class:\s([\w:]*)/)[0]
+      results.first if results&.any?
     end
 
     def handler_job_arguments
-      args = object.handler.scan(%r{arguments\:\n\s*([\-\s\w\n\:\/\@\.]*)\s+\s+executions\:})[0]
+      args = object.handler.scan(%r{arguments:\n\s*([-\s\w\n:/@.]*)\s+\s+executions:})[0]
       return [] unless args
-      args[0].scan(%r{(\b[\w\:\/\.\@]*)\n}).map(&:first)
+
+      args[0].scan(%r{(\b[\w:/.@]*)\n}).map(&:first)
     end
 
     def handler_controller_parameters
-      regexp = %r{ActionController::Parameters\n\s*parameters\:\s*!ruby\/hash:ActiveSupport::HashWithIndifferentAccess\n\s*([\'\w\s\n\:]*)}
+      regexp = %r{ActionController::Parameters\n\s*parameters:\s*!ruby/hash:ActiveSupport::HashWithIndifferentAccess\n\s*(['\w\s\n:]*)}
       params = object.handler.scan(regexp)[0]
       return [] unless params
-      params.to_s.scan(/(\w*)\:\s([\'\w\s]*)/)
+
+      params.to_s.scan(/(\w*):\s(['\w\s]*)/)
     end
 
     private
@@ -77,5 +80,4 @@ module DelayedJobReact
       timevalue.present? && timevalue.in_time_zone.strftime('%b %d, %Y %H:%M%P')
     end
   end
-
 end
