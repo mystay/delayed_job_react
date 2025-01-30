@@ -18,7 +18,6 @@ class DelayedJobReactItem extends React.Component{
     this.handlerMethod = this.handlerMethod.bind(this);
     this.handlerJob = this.handlerJob.bind(this);
     this.handlerJobArguments = this.handlerJobArguments.bind(this);
-    this.handlerActiveRecordAttributes = this.handlerActiveRecordAttributes.bind(this);
     this.handlerControllerParameters = this.handlerControllerParameters.bind(this);
     this.handler = this.handler.bind(this);
     this.toggleButton = this.toggleButton.bind(this);
@@ -77,7 +76,6 @@ class DelayedJobReactItem extends React.Component{
           <div>
             {this.errorMessage()}
             {this.handlerJobArguments()}
-            {this.handlerActiveRecordAttributes()}
             {this.handlerControllerParameters()}
             {this.handler()}
           </div>
@@ -136,27 +134,6 @@ class DelayedJobReactItem extends React.Component{
       return(
         <React.Fragment>
           {this.toggleButton('Arguments')}
-          {args}
-        </React.Fragment>
-      );
-    }
-  }
-  handlerActiveRecordAttributes(){
-    if (this.state.job.handler_active_record_attributes.length>0){
-      let args = []
-      if (this.state.displayAttributes){
-        this.state.job.handler_active_record_attributes.forEach(function(arg){
-          args.push(
-            <li key={arg[0]}>
-              <code>{arg.join(' - ')}</code>
-            </li>
-          );
-        });
-        args = (<ol className="m20">{args}</ol>);
-      }
-      return(
-        <React.Fragment>
-          {this.toggleButton('Attributes')}
           {args}
         </React.Fragment>
       );
