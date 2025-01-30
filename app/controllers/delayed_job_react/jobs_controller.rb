@@ -2,29 +2,18 @@
 
 module DelayedJobReact
   class JobsController < DelayedJobReact::ApplicationController
-
     def index
       respond_to do |format|
-        format.json{
+        format.json do
           @jobs = Delayed::Job.all
           if params[:status].to_s.casecmp('pending').zero?
             @jobs = @jobs.where(attempts: 0)
           elsif params[:status].to_s.casecmp('failed').zero?
-            if defined?(Moped)
-              @jobs = @jobs.where(:last_error.ne => nil)
-            elsif defined?(ActiveRecord)
-              @jobs.where.not(last_error: nil)
-            end
+            @jobs = @jobs.where(:last_error.ne => nil)
           end
           @jobs = @jobs.where(queue: params[:queue]) if params[:queue].present?
-          if defined?(Moped)
-            failed_count = @jobs.where(:attempts.gt => 2).count
-          elsif defined?(ActiveRecord)
-            failed_count = @jobs.where('attempts > 2').count
-            @jobs = @jobs.page(params[:page])
-          else
-            failed_count = 0
-          end
+          failed_count = @jobs.where(:attempts.gt => 2).count
+
           render json: {
             counts: {
               failed: failed_count,
@@ -32,8 +21,8 @@ module DelayedJobReact
             },
             jobs: @jobs.map { |j| DelayedJobReact::JobSerializer.new(j) }
           }
-        }
-        format.html{}
+        end
+        format.html {}
       end
     end
 
