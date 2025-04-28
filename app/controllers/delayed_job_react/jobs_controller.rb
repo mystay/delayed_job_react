@@ -9,10 +9,10 @@ module DelayedJobReact
           if params[:status].to_s.casecmp('pending').zero?
             @jobs = @jobs.where(attempts: 0)
           elsif params[:status].to_s.casecmp('failed').zero?
-            @jobs = @jobs.where(:last_error.ne => nil)
+            @jobs = @jobs.where('last_error <> ""')
           end
           @jobs = @jobs.where(queue: params[:queue]) if params[:queue].present?
-          failed_count = @jobs.where(:attempts.gt => 2).count
+          failed_count = @jobs.where('attempts > 2').count
 
           render json: {
             counts: {

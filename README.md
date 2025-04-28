@@ -26,11 +26,6 @@ To install the component in your own view, render the component:
 <%= react_component 'DelayedJobReactViewer' %>
 ```
 
-To utilize the live counter, add the following hook to `initializers/delayed_job.rb`
-```
-Delayed::Worker.plugins << DelayedJobReact::JobHook
-```
-
 And include the component in your view:
 ```
 <%= react_component 'DelayedJobReactCounter', href: admin_home_path %>
